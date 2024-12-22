@@ -1,0 +1,7 @@
+---
+
+- name: Setup Aurora agent on a Windows machine only
+  ansible.builtin.include_tasks:
+    file: windows.yml
+  when: ansible_os_family == "Windows"
+

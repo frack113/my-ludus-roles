@@ -1,0 +1,30 @@
+---
+- name: Check if aurora service is installed
+  win_service:
+    name: Aurora Agent
+  register: service_aurora
+
+# Defender don't like SigmaHQ rules
+- name: Exclude defender
+  ansible.windows.win_powershell:
+    script: |
+      Add-MpPreference -ExclusionPath c:\\aurora
+      Add-MpPreference -ExclusionPath "c:\\Program Files\\Aurora-Agent"
+  when: not service_aurora.exists
+
+- name: Install aurora as service
+  ansible.builtin.include_tasks:
+    file: install.yml
+  when: not service_aurora.exists
+
+# we have aurora time to configure it
+- name: Copy the agent-config template to the host
+  ansible.builtin.template:
+    src: agent-config.yml.j2
+    dest: 'C:\Program Files\Aurora-Agent\agent-config.yml'
+
+- name: Restart aurora service
+  win_service:
+    name: Aurora Agent
+    state: restarted
+
