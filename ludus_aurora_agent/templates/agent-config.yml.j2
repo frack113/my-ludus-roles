@@ -17,9 +17,9 @@ json: false
 # Path to the directory containing the Aurora Agent license
 license-path: C:\Program Files\Aurora-Agent
 # Send logs to this UDP Address (as host:port)
-udp-target: ''
+udp-target: '{{ ludus_aurora_udp_target }}'
 # Format for logs sent via UDP
-udp-format: ''
+udp-format: '{{ ludus_aurora_udp_format }}'
 # Send logs to this TCP Address (as host:port)
 tcp-target: ''
 # Format for logs sent via TCP
