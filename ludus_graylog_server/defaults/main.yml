@@ -1,0 +1,6 @@
+---
+# Role variables should all be prefaced with the name of the role to avoid
+# name conflicts with other roles
+ludus_graylog_opensearch_admin_password: 'pdMDL4!5ELcBSWqu'
+ludus_graylog_svr_password_secret: 'r9t-HW87CV3OJysF1BvVBmkZCvpFdGgLsXCkf8NUbUZSZnW2lvdwraeUdP1y4eP8wbOd2LizMjSvMiJPWsg4VcAufhij809c'
+ludus_graylog_svr_root_password_sha2: '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'

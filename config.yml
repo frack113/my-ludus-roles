@@ -1,0 +1,27 @@
+ludus:
+  - vm_name: "{{ range_id }}-win10-22h2-enterprise-x64-1"
+    hostname: "{{ range_id }}-WIN10-22H2-1"
+    template: win10-22h2-x64-fr-enterprise-template
+    vlan: 10
+    ip_last_octet: 21
+    ram_gb: 4
+    cpus: 4
+    windows:
+      install_additional_tools: false
+    roles:
+     - ludus_aurora_agent
+    role_vars:
+      ludus_aurora_dashboard: true
+      ludus_aurora_udp_target: '10.2.10.31:10514'
+      ludus_aurora_udp_format: 'json'
+
+  - vm_name: "{{ range_id }}-graylog-server"
+    hostname: "{{ range_id }}-GRAYLOG"
+    template: ubuntu-22.04-x64-fr-server-template
+    vlan: 10
+    ip_last_octet: 31
+    ram_gb: 4
+    cpus: 4
+    linux: true
+    roles:
+      - ludus_graylog_server

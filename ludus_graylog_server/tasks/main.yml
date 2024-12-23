@@ -1,0 +1,6 @@
+---
+
+- name: Install Graylog on Ubuntu 22.04
+  ansible.builtin.include_tasks:
+    file: ubuntu2204.yml
+  when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '22.04'

@@ -47,3 +47,7 @@ Temporary Items
 # Ignore all local history of files
 .history
 .ionide
+
+# Private File
+/ludus_aurora_agent/files/aurora-agent.lic
+/ludus_aurora_agent/files/aurora-agent.zip

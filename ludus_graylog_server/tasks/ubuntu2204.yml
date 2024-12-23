@@ -1,0 +1,93 @@
+---
+# https://go2docs.graylog.org/current/downloading_and_installing_graylog/ubuntu_installation_os.html
+
+#
+# MongoDB
+#
+- name: set APT Key for MongoDB
+  ansible.builtin.apt_key:
+    url: https://www.mongodb.org/static/pgp/server-6.0.asc
+    keyring: /usr/share/keyrings/mongodb-server-6.0.gpg
+    state: present
+
+- name: Add mongodb repository into sources list
+  ansible.builtin.apt_repository:
+    repo: "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-6.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse"
+    state: present
+    update_cache: True
+
+- name: Install mongodb-org
+  ansible.builtin.apt:
+    name: mongodb-org
+    state: present
+
+- name: Install mongodb service
+  ansible.builtin.systemd_service:
+    name: mongod.service
+    daemon_reload: true
+    enabled: true
+    state: started
+
+#
+# OpenSearch
+# 
+- name: Add opensearch GPG key
+  ansible.builtin.get_url:
+    url: https://artifacts.opensearch.org/publickeys/opensearch.pgp
+    dest: /etc/apt/trusted.gpg.d/opensearch.asc
+
+- name: Add opensearch repository into sources list
+  ansible.builtin.apt_repository:
+    repo: "deb https://artifacts.opensearch.org/releases/bundle/opensearch/2.x/apt stable main"
+    state: present
+    update_cache: True
+
+- name: Install opensearch
+  ansible.builtin.apt:
+    name: opensearch=2.15.0
+    state: present
+  environment:    
+     OPENSEARCH_INITIAL_ADMIN_PASSWORD: "{{ ludus_graylog_opensearch_admin_password }}"
+
+- name: Copy opensearch.yml template to the host
+  ansible.builtin.template:
+    src: opensearch.yml.j2
+    dest: /etc/opensearch/opensearch.yml
+
+- name: Copy jvm.options template to the host
+  ansible.builtin.template:
+    src: jvm.options.j2
+    dest: /etc/opensearch/jvm.options
+
+- name: Install opensearch service
+  ansible.builtin.systemd_service:
+    name: opensearch.service
+    daemon_reload: true
+    enabled: true
+    state: started
+
+#
+# Graylog 6.1.x
+# 
+
+- name: Install a graylog .deb package from the internet
+  ansible.builtin.apt:
+    deb: https://packages.graylog2.org/repo/packages/graylog-6.1-repository_latest.deb
+
+- name: Install graylog server
+  ansible.builtin.apt:
+    name: graylog-server
+    state: present
+    update_cache: yes
+
+- name: Copy server.conf template to the host
+  ansible.builtin.template:
+    src: server.conf.j2
+    dest: /etc/graylog/server/server.conf
+
+- name: Install graylog service
+  ansible.builtin.systemd_service:
+    name: graylog-server.service
+    daemon_reload: true
+    enabled: true
+    state: started
