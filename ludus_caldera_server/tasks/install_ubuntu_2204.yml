@@ -1,0 +1,107 @@
+---
+# https://caldera.readthedocs.io/en/latest/Installing-Caldera.html
+# https://github.com/mitre/caldera/blob/master/Dockerfile
+# https://github.com/nodesource/distributions?tab=readme-ov-file#ubuntu-versions
+# need to remove git force :=)
+
+- name: Install requirements
+  ansible.builtin.apt:
+    name: 
+      - git
+      - python3-pip
+      - mingw-w64
+      - zlib1g
+      - unzip
+      - upx
+    state: present
+    update_cache: yes
+    install_recommends: yes
+
+- name: Install NodeJS
+  ansible.builtin.include_tasks:
+    file: dep_node.yml
+
+- name: Install Go-lang
+  ansible.builtin.include_tasks:
+    file: dep_go.yml
+
+- name: Reset SSH Connection
+  ansible.builtin.meta: reset_connection
+
+- name: Clone caldera
+  ansible.builtin.git:
+    repo: 'https://github.com/mitre/caldera.git'
+    dest: /opt/caldera
+    recursive: true
+    track_submodules: true
+    force: true
+
+- name: Copy custom config
+  ansible.builtin.template:
+    src: local.yml.j2
+    dest: /opt/caldera/conf/local.yml
+
+- name: Copy custom magma .env
+  ansible.builtin.template:
+    src: magma.env.j2
+    dest: /opt/caldera/plugins/magma/.env
+
+- name: Install caldera python requirements file
+  ansible.builtin.pip:
+    requirements: "{{ item }}"
+  loop:
+    - /opt/caldera/requirements.txt
+    - /opt/caldera/requirements-dev.txt
+    - /opt/caldera/plugins/human/requirements.txt
+    - /opt/caldera/plugins/emu/requirements.txt
+
+- name: Install caldera python fix AsyncSSH error
+  ansible.builtin.pip:
+    name: asyncssh
+    state: latest
+
+- name: Caldera - Sancat gocat plugins
+  ansible.builtin.shell:
+    cmd: "{{ item }}" 
+    chdir: /opt/caldera/plugins/sandcat/gocat
+  loop:
+    - go mod tidy
+    - go mod download
+
+- name: Caldera - sancat update agent
+  ansible.builtin.command:
+    cmd: ./update-agents.sh
+    chdir: /opt/caldera/plugins/sandcat
+
+- name: Clone atomic read team
+  ansible.builtin.git:
+    repo: 'https://github.com/redcanaryco/atomic-red-team.git'
+    dest: /opt/caldera/plugins/atomic/data/atomic-red-team
+    depth: 1
+    force: true
+
+# need to enter a password 
+#- name: Caldera - emu - download_payloads
+#  ansible.builtin.shell:
+#    cmd: ./download_payloads.sh
+#    chdir: /opt/caldera/plugins/emu
+
+- name: Caldera - Magma plugins
+  ansible.builtin.command:
+    cmd: npm install
+    chdir: /opt/caldera/plugins/magma
+  loop:
+    - npm install
+    - npm audit fix --force
+    - npm run build
+
+- name: Create caldera service
+  ansible.builtin.copy:
+    src: ubuntu22.service
+    dest: /lib/systemd/system/caldera.service
+
+- name: Start caldera service 
+  ansible.builtin.service:
+    name: caldera.service
+    state: started
+    enabled: yes

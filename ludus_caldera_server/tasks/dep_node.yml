@@ -1,0 +1,28 @@
+---
+- name: Remove old nodejs
+  ansible.builtin.apt:
+    name: 
+      - nodejs
+      - npm
+    state: absent
+    autoremove: yes
+    purge: yes
+ 
+- name: Download nodejs 22 LTS setup 
+  ansible.builtin.get_url:
+    url: https://deb.nodesource.com/setup_22.x
+    dest: /tmp/nodesource_setup.sh
+    mode: '0755'
+
+- name: Add nodejs repo by script
+  ansible.builtin.command:
+    cmd: /tmp/nodesource_setup.sh
+
+- name: Install new nodejs
+  ansible.builtin.apt:
+    name: 
+      - nodejs
+    update_cache: yes
+    install_recommends: yes
+    autoremove: yes
+    state: latest

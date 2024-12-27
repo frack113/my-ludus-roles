@@ -1,0 +1,7 @@
+---
+# Role variables should all be prefaced with the name of the role to avoid
+# name conflicts with other roles
+ludus_caldera_go_version: '1.23.4'
+ludus_caldera_admin_pwd: 'admin'
+ludus_caldera_red_pwd: 'red'
+ludus_caldera_blue_pwd: 'blue'

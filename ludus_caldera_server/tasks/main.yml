@@ -1,0 +1,9 @@
+---
+- name: "Populate services info"
+  ansible.builtin.service_facts:
+   
+- name: Install Caldera on Ubuntu 22.xx
+  ansible.builtin.include_tasks:
+    file: install_ubuntu_2204.yml
+  when: ansible_distribution == 'Ubuntu' and ansible_distribution_major_version == '22' # and ansible_facts.services['caldera.service'].state != 'running'
+
