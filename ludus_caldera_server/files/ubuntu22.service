@@ -7,7 +7,7 @@ User=root
 Type=simple
 Environment=PYTHONUNBUFFERED=1
 WorkingDirectory=/opt/caldera
-ExecStart=/usr/bin/python3 /opt/caldera/server.py
+ExecStart=/opt/caldera/venv/bin/python3 /opt/caldera/server.py
 ExecReload=/bin/kill -HUP $MAINPIDKill
 Mode=process
 Restart=on-failure

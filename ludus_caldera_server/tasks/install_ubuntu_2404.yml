@@ -3,6 +3,7 @@
   ansible.builtin.apt:
     name: 
       - git
+      - curl 
       - python3
       - python3-pip
       - python3-virtualenv
@@ -10,20 +11,12 @@
       - zlib1g
       - unzip
       - upx
+      - golang-go
+      - nodejs 
+      - npm
     state: present
     update_cache: yes
     install_recommends: yes
-
-- name: Install NodeJS
-  ansible.builtin.include_tasks:
-    file: dep_node.yml
-
-- name: Install Go-lang
-  ansible.builtin.include_tasks:
-    file: dep_go.yml
-
-- name: Reset SSH Connection
-  ansible.builtin.meta: reset_connection
 
 - name: Install Caldera
   ansible.builtin.include_tasks:

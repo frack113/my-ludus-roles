@@ -48,7 +48,12 @@ Try clicking on http://admin:xjYZzgphjt@0.0.0.0:9000
 
 ## ludus_caldera_server
 
-Install Caldera 5.x main branch on an ubuntu server
+Install Caldera 5.x main branch on an linux server
+
+Tests:
+
+[x] Ubuntu 22.04
+[X] Ubuntu 24.04
 
 
 ## Next
