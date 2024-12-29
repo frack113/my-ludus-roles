@@ -24,8 +24,12 @@
   loop:
     - /opt/caldera/requirements.txt
     - /opt/caldera/requirements-dev.txt
-    - /opt/caldera/plugins/human/requirements.txt
     - /opt/caldera/plugins/emu/requirements.txt
+    - /opt/caldera/plugins/human/pyhuman/requirements.txt
+    - /opt/caldera/plugins/human/requirements.txt
+    - /opt/caldera/plugins/stockpile/requirements.txt
+    - /opt/caldera/plugins/builder/requirements.txt
+    #- /opt/caldera/plugins/debrief/requirements.txt
 
 - name: Install caldera python fix AsyncSSH error
   ansible.builtin.pip:
@@ -67,4 +71,14 @@
     - npm install
     - npm audit fix --force
     - npm run build
+
+#- name: Caldera - training plugins
+#  ansible.builtin.command:
+#    cmd: "{{ item }}" 
+#    chdir: /opt/caldera/plugins/training
+#  loop:
+#    - npm install
+#    - npm audit fix --force
+#    - npm run build
+
 

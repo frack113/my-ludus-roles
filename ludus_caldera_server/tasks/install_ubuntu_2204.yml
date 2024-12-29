@@ -1,4 +1,18 @@
 ---
+
+- name: set APT Key for Docker
+  ansible.builtin.apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    keyring: /usr/share/keyrings/docker-archive-keyring.gpg
+    state: present
+
+- name: Add Docker repository into sources list
+  ansible.builtin.apt_repository:
+    repo: "deb [arch=amd64,arm64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu jammy stable"
+    state: present
+    update_cache: True
+
+
 - name: Install requirements
   ansible.builtin.apt:
     name: 
@@ -10,6 +24,8 @@
       - zlib1g
       - unzip
       - upx
+      - haproxy
+      - docker-ce 
     state: present
     update_cache: yes
     install_recommends: yes
@@ -31,7 +47,7 @@
 
 - name: Create caldera service
   ansible.builtin.copy:
-    src: ubuntu22.service
+    src: ubuntu.service
     dest: /lib/systemd/system/caldera.service
 
 - name: Start caldera service 

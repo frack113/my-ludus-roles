@@ -52,9 +52,9 @@ Install Caldera 5.x main branch on an linux server
 
 Tests:
 
+[ ] AlmaLinux 9
 [x] Ubuntu 22.04
 [X] Ubuntu 24.04
-
 
 ## Next
 
