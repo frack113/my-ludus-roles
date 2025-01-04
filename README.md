@@ -56,6 +56,10 @@ Tests:
 [x] Ubuntu 22.04
 [X] Ubuntu 24.04
 
+## ludus_caldera_client
+
+Install sandcat agent on a windows client
+
 ## Next
 
 ![img](./freepik.jpeg)
