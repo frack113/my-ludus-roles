@@ -1,6 +1,0 @@
----
-# Role variables should all be prefaced with the name of the role to avoid
-# name conflicts with other roles
-ludus_aurora_dashboard: false
-ludus_aurora_udp_target: ''
-ludus_aurora_udp_format: ''
