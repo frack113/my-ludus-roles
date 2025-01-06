@@ -14,7 +14,7 @@ Check https://github.com/frack113/ludus_caldera_server
 
 ## ludus_caldera_agent
 
-Check https://github.com/frack113/ludus_aurora_agent
+Check https://github.com/frack113/ludus_caldera_agent
 
 ## ludus_graylog_server
 
