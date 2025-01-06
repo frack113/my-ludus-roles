@@ -8,6 +8,14 @@ template from : https://github.com/badsectorlabs/ludus_ansible_role_template
 
 Check https://github.com/frack113/ludus_aurora_agent
 
+## ludus_caldera_server
+
+Check https://github.com/frack113/ludus_caldera_server
+
+## ludus_caldera_agent
+
+Check https://github.com/frack113/ludus_aurora_agent
+
 ## ludus_graylog_server
 
 You need to log to the ubuntu and check `/var/log/graylog-server/server.log`
@@ -42,19 +50,7 @@ Try clicking on http://admin:xjYZzgphjt@0.0.0.0:9000
 ========================================================================================================
 ```
 
-## ludus_caldera_server
 
-Install Caldera 5.x main branch on an linux server
-
-Tests:
-
-[ ] AlmaLinux 9
-[x] Ubuntu 22.04
-[X] Ubuntu 24.04
-
-## ludus_caldera_client
-
-Install sandcat agent on a windows client
 
 ## Next
 

@@ -1,4 +1,0 @@
----
-# Role variables should all be prefaced with the name of the role to avoid
-# name conflicts with other roles
-ludus_caldera_client_agent_name: 'C:\Users\Public\splunkd.exe'
