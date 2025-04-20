@@ -1,4 +1,5 @@
 # ludus_role
+
 Some ansible role for ludus.cloud
 Check https://docs.ludus.cloud/
 
@@ -15,6 +16,14 @@ Check https://github.com/frack113/ludus_caldera_server
 ## ludus_caldera_agent
 
 Check https://github.com/frack113/ludus_caldera_agent
+
+## ludus_filigran_opencti
+
+check https://github.com/frack113/ludus_filigran_opencti
+
+## ludus_ghosts_server
+
+check https://github.com/frack113/ludus_ghosts_server
 
 ## ludus_graylog_server
 
